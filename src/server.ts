@@ -1,12 +1,15 @@
 import express, { Request, Response } from 'express'
 import log from '../src/logger/customLog'
 import dotenv from 'dotenv'
+import { database } from './connection/database'
 
 
 dotenv.config()
 
 const server = express()
 const PORT = process.env.PORT
+
+database().catch((err) => console.error(err))
 
 server.get('/', (req: Request, res: Response) => {
     res.status(200).json({
