@@ -1,4 +1,4 @@
-import mongoose, {ConnectOptions} from 'mongoose'
+import mongoose, { ConnectOptions } from 'mongoose'
 import log from '../logger/customLog'
 
 import dotenv from 'dotenv'
@@ -13,7 +13,7 @@ const connectionParams = {
     useUnifiedTopology: true,
 }
 
-export const database = async() => {
+export const database = async () => {
     await mongoose
         .connect(uri, connectionParams as ConnectOptions)
         .then(() => {
