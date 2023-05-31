@@ -6,6 +6,10 @@ const cinemaSchema = new Schema(
             type: String,
             required: [true, 'movie is required'],
         },
+        ticketPrice: {
+            type: Number,
+            required: true,
+        },
         capacity: {
             type: Number,
         },
