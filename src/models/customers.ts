@@ -22,3 +22,5 @@ const customerSchema = new Schema(
     },
     { timestamps: true }
 )
+
+export const Customer = model('customer', customerSchema)
