@@ -2,6 +2,10 @@ import { model, Schema } from 'mongoose'
 
 const cinemaSchema = new Schema(
     {
+        name: {
+            type: String,
+            required: true,
+        },
         movie: {
             type: String,
             required: [true, 'movie is required'],
@@ -12,10 +16,12 @@ const cinemaSchema = new Schema(
         },
         capacity: {
             type: Number,
+            default: 100,
         },
 
         availableSeats: {
             type: Number,
+            default: 100,
         },
     },
     { timestamps: true }

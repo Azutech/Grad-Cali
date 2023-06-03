@@ -1,26 +1,18 @@
-import {model, Schema, Types} from 'mongoose'
-import {Customer} from './customers'
-import {Cinema} from './cinema'
+import { model, Schema, Types } from 'mongoose'
+import { Cinema } from './cinema'
 
-const ticketSchema = new Schema({
+const ticketSchema = new Schema(
+    {
+        customerName: {
+            type: String,
+        },
 
-    customerId: {
-        type: Types.ObjectId,
-        required: true,
-        ref: Customer,
+        bookedSeat: {
+            type: Number,
+            default: 0,
+        },
     },
-
-    cinema: {
-        type: Types.ObjectId,
-        required: true,
-        ref: Cinema
-    },
-
-    seat: {
-        type: Number
-    }
-}, 
-{timestamps: true}
+    { timestamps: true }
 )
 
 export const Ticket = model('ticket', ticketSchema)
