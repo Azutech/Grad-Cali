@@ -7,7 +7,7 @@ const ticketSchema = new Schema(
             type: String,
         },
 
-        bookedSeat: {
+        bookedSeats: {
             type: Number,
             default: 0,
         },

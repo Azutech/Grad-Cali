@@ -23,11 +23,14 @@ export const allMovieService = async (
               }
             : {}
 
-        const allticket = await Cinema.find({ ...tickets, ...search })
-        if (!allticket)
+        const allMovies = await Cinema.find({ ...tickets, ...search })
+        if (!allMovies)
             return next(new AppError('Unable to retrieve data', 404))
 
-        return allticket
+            return res.status(200).json({
+                message: 'all movies has been retrieved',
+                data: allMovies,
+            })
     } catch (err: any) {
         console.error(err)
         return next(new AppError(`Server Error ${err.message}`, 503))
@@ -47,7 +50,10 @@ export const oneMovieService = async (
             return next(new AppError('Unable to retrieve data', 404))
         }
 
-        return booking
+        return res.status(200).json({
+            message: 'data been retrieved successfully',
+            data: booking,
+        })
     } catch (err: any) {
         console.error(err)
         return next(new AppError(`Server Error ${err.message}`, 503))
@@ -76,7 +82,10 @@ export const createCinemaService = async (
             ticketPrice,
         })
 
-        return addMovie
+        return res.status(200).json({
+            message: 'new movie added ',
+            data: newMovie,
+        })
     } catch (err: any) {
         console.error(err)
         return next(new AppError(`Server Error ${err.message}`, 503))
@@ -98,7 +107,7 @@ export const bookingService = async (
 
         console.log(2)
 
-        const foundCinema = await Cinema.findById(cinemaId)
+        const foundCinema = await Cinema.findOne({ _id: cinemaId })
         if (!foundCinema) {
             return next(
                 new AppError(`Cinema with this id ${cinemaId} not found`, 404)
@@ -114,12 +123,10 @@ export const bookingService = async (
         if (seats > foundCinema.availableSeats) {
             return next(new AppError('Not enough seats available', 404))
         } else {
-            await Cinema.findOneAndUpdate(
-                { _id: cinemaId },
-                { $inc: { availableSeats: -seats } }
-            )
+            foundCinema.availableSeats -= seats
             await foundCinema.save()
         }
+        console.log(seats)
 
         const customer = new Ticket({
             customerName: name,
@@ -128,8 +135,15 @@ export const bookingService = async (
         await customer.save()
 
         semaphore.release()
+
+        return res.status(200).json({
+            message: 'Movie ticket booked succesfully',
+
+            data: customer,
+        })
     } catch (err: any) {
         console.error(err)
         return next(new AppError(`Server Error ${err.message}`, 503))
+    } finally {
     }
 }
