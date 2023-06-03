@@ -7,13 +7,7 @@ const ticketSchema = new Schema(
             type: String,
         },
 
-        cinema: {
-            type: Types.ObjectId,
-            required: true,
-            ref: Cinema,
-        },
-
-        seat: {
+        bookedSeat: {
             type: Number,
             default: 0,
         },

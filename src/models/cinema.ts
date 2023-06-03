@@ -2,6 +2,10 @@ import { model, Schema } from 'mongoose'
 
 const cinemaSchema = new Schema(
     {
+        name: {
+            type: String,
+            required: true,
+        },
         movie: {
             type: String,
             required: [true, 'movie is required'],

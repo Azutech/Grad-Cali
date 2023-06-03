@@ -4,8 +4,6 @@ import { Cinema } from '../models/cinema'
 import { Semaphore } from '../utils/semaphore'
 import AppError from '../utils/error'
 
-const semaphore = new Semaphore(100)
-
 export const allMovieService = async (
     req: Request,
     res: Response,
@@ -61,19 +59,75 @@ export const createCinemaService = async (
     res: Response,
     next: NextFunction
 ) => {
-    const { movie, ticketPrice } = req.body
+    const { name, movie, ticketPrice } = req.body
 
     try {
+        if (!name || !movie || !ticketPrice) {
+            return next(new AppError('Invalid Parameters', 404))
+        }
         const newMovie = await Cinema.findOne({ movie: movie })
         if (newMovie) {
             return next(new AppError('Movie already added', 404))
         }
 
         const addMovie = await Cinema.create({
+            name,
             movie,
             ticketPrice,
         })
+
         return addMovie
+    } catch (err: any) {
+        console.error(err)
+        return next(new AppError(`Server Error ${err.message}`, 503))
+    }
+}
+
+export const bookingService = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const { cinemaId } = req.params
+        const { name, seats } = req.body
+
+        if (!name || !seats) {
+            return res.status(400).json({ message: 'Invalid input' })
+        }
+
+        console.log(2)
+
+        const foundCinema = await Cinema.findById(cinemaId)
+        if (!foundCinema) {
+            return next(
+                new AppError(`Cinema with this id ${cinemaId} not found`, 404)
+            )
+        }
+
+        console.log(3)
+
+        const semaphore = new Semaphore(foundCinema.availableSeats)
+
+        semaphore.acquire()
+
+        if (seats > foundCinema.availableSeats) {
+            return next(new AppError('Not enough seats available', 404))
+        } else {
+            await Cinema.findOneAndUpdate(
+                { _id: cinemaId },
+                { $inc: { availableSeats: -seats } }
+            )
+            await foundCinema.save()
+        }
+
+        const customer = new Ticket({
+            customerName: name,
+            bookedSeats: seats,
+        })
+        await customer.save()
+
+        semaphore.release()
     } catch (err: any) {
         console.error(err)
         return next(new AppError(`Server Error ${err.message}`, 503))

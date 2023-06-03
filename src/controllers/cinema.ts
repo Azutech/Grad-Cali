@@ -3,6 +3,7 @@ import {
     oneMovieService,
     createCinemaService,
     allMovieService,
+    bookingService,
 } from '../services/cinema'
 
 export const oneBooking = async (
@@ -40,5 +41,19 @@ export const allMovies = async (
     return res.status(200).json({
         message: 'all movies has been retrieved',
         data: allMovies,
+    })
+}
+
+export const bookies = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    const booked = await bookingService(req, res, next)
+
+    return res.status(200).json({
+        message: 'Movie ticket booked succesfully',
+
+        data: booked,
     })
 }
