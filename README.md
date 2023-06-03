@@ -35,7 +35,7 @@ To contribute to the project, you can:
  - POST /api/cinema/newMovies: Posts new movies.
  - POST /api/cinema/booking/:Id: Unbook tickets.
 
- Click this [link] () to get the full API Documentation 
+ Click this [link] (https://documenter.getpostman.com/view/19569197/2s93sW8bD9) to get the full API Documentation 
 ## License
 [MIT] ()
 The project is licensed under the MIT license.
