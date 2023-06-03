@@ -1,6 +1,7 @@
 # Grad-Cali
 This is a short description of a booking ticket for a cinema using the semaphore function to prevent overbooking. 
 
+
 ## Installation
 
 To install the project, follow these steps:
@@ -28,6 +29,10 @@ To contribute to the project, you can:
 - Make your changes and commit them: `git commit -m "Add feature-name"`
 - Push to your branch: `git push origin feature-name`
 - Create a pull request
+
+## Hosted Link
+ The app was deployed using the [railway] (https://railway.app). Find the link [Here]  (https://grad-cali-production.up.railway.app/)
+- 
 
 ## API Documentation
  - GET /api/cinema/oneMovie/:Id: Gets the one movie.
