@@ -31,8 +31,8 @@ To contribute to the project, you can:
 - Create a pull request
 
 ## Hosted Link
- The app was deployed using the [railway] (https://railway.app). Find the link [Here]  (https://grad-cali-production.up.railway.app/)
-- 
+ -The app was deployed using the [railway](https://railway.app). Find the link [Here](https://grad-cali-production.up.railway.app/)
+
 
 ## API Documentation
  - GET /api/cinema/oneMovie/:Id: Gets the one movie.
@@ -40,7 +40,7 @@ To contribute to the project, you can:
  - POST /api/cinema/newMovies: Posts new movies.
  - POST /api/cinema/booking/:Id: Unbook tickets.
 
- Click this [link] (https://documenter.getpostman.com/view/19569197/2s93sW8bD9) to get the full API Documentation 
+ Click this [link](https://documenter.getpostman.com/view/19569197/2s93sW8bD9) to get the full API Documentation 
 ## License
 [MIT] ()
 The project is licensed under the MIT license.
