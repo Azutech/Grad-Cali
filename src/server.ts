@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express'
 import log from '../src/logger/customLog'
 import dotenv from 'dotenv'
 import { database } from './connection/database'
+import { routes } from './routes/index'
 
 dotenv.config()
 
@@ -13,7 +14,7 @@ database().catch((err) => console.error(err))
 server.use(express.json())
 server.use(express.urlencoded({ extended: true }))
 
-server.use('/api')
+server.use('/api', routes)
 
 server.get('/', (req: Request, res: Response) => {
     res.status(200).json({

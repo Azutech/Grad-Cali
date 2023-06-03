@@ -6,7 +6,7 @@ import AppError from '../utils/error'
 
 const semaphore = new Semaphore(100)
 
-export const getAllBooking = async (
+export const allMovieService = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -29,17 +29,14 @@ export const getAllBooking = async (
         if (!allticket)
             return next(new AppError('Unable to retrieve data', 404))
 
-        return res.status(202).json({
-            message: 'All Products has been retrieved',
-            data: allticket,
-        })
+        return allticket
     } catch (err: any) {
         console.error(err)
         return next(new AppError(`Server Error ${err.message}`, 503))
     }
 }
 
-export const oneBooking = async (
+export const oneMovieService = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -52,38 +49,31 @@ export const oneBooking = async (
             return next(new AppError('Unable to retrieve data', 404))
         }
 
-
-        return res.status(200).json({
-            success: true,
-            message: 'All users has been retrieved',
-            data: booking
-        })
+        return booking
     } catch (err: any) {
         console.error(err)
         return next(new AppError(`Server Error ${err.message}`, 503))
     }
 }
 
-
-export const createCinema = async (req: Request, res: Response, next: NextFunction) => {
-    const { movie, ticketPrice} = req.body
+export const createCinemaService = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    const { movie, ticketPrice } = req.body
 
     try {
-        const newMovie = await Cinema.findOne({movie: movie})
+        const newMovie = await Cinema.findOne({ movie: movie })
         if (newMovie) {
             return next(new AppError('Movie already added', 404))
         }
 
         const addMovie = await Cinema.create({
             movie,
-            ticketPrice
+            ticketPrice,
         })
-         
-        return res.status(200).json({
-            success: true,
-            message: 'new movie added',
-            data: addMovie
-        })
+        return addMovie
     } catch (err: any) {
         console.error(err)
         return next(new AppError(`Server Error ${err.message}`, 503))

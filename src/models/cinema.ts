@@ -12,12 +12,12 @@ const cinemaSchema = new Schema(
         },
         capacity: {
             type: Number,
-            default: 100
+            default: 100,
         },
 
         availableSeats: {
             type: Number,
-            default : 100
+            default: 100,
         },
     },
     { timestamps: true }
