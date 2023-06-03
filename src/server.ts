@@ -13,6 +13,8 @@ database().catch((err) => console.error(err))
 server.use(express.json())
 server.use(express.urlencoded({ extended: true }))
 
+server.use('/api')
+
 server.get('/', (req: Request, res: Response) => {
     res.status(200).json({
         message: 'Welcome to Grand-Cali \n Best Movies to Watch ',

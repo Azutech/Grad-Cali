@@ -1,4 +1,4 @@
-class Semaphore {
+export class Semaphore {
     private count: number
     private waitQueue: (() => void)[]
 
@@ -14,6 +14,15 @@ class Semaphore {
             await new Promise<void>((resolve) => {
                 this.waitQueue.push(resolve)
             })
+        }
+    }
+
+    release(): void {
+        this.count++
+
+        if (this.waitQueue.length > 0) {
+            const firstInLine = this.waitQueue.shift()
+            firstInLine?.()
         }
     }
 }

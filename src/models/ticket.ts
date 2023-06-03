@@ -1,13 +1,10 @@
 import { model, Schema, Types } from 'mongoose'
-import { Customer } from './customers'
 import { Cinema } from './cinema'
 
 const ticketSchema = new Schema(
     {
-        customerId: {
-            type: Types.ObjectId,
-            required: true,
-            ref: Customer,
+        customerName: {
+            type: String,
         },
 
         cinema: {
@@ -18,6 +15,7 @@ const ticketSchema = new Schema(
 
         seat: {
             type: Number,
+            default: 0,
         },
     },
     { timestamps: true }
